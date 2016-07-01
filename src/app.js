@@ -1,8 +1,12 @@
+//needed module
 var Sequelize = require('sequelize')
 var express = require('express')
 var bodyParser = require('body-parser')
 var app = express()
 var session = require('express-session')
+app.use(bodyParser.urlencoded ({extended: false}));
+
+
 
 app.use(session({
 	secret: 'oh wow very secret much security',
@@ -31,6 +35,39 @@ app.set ("view engine","jade");
 app.get('/',function (request,response){
     response.render('index')
 })
+
+app.get('/register',function (request,response){
+    response.render('register')
+})
+
+app.post("/register",function(request,response){
+//    if((typeof alert) === 'undefined') {
+//    global.alert = function(message) {
+//        console.log(message);
+//    }
+//}
+//    if (request.body.username == "")
+//        {
+//            alert("Error: Username cannot be blank!");
+//        }
+// if(request.body.password != "" && request.body.password == request.body.passwordcheck) {
+//      if(request.body.password.length < 6) {
+//        alert("Error: Password must contain at least six characters!");
+//
+//      }
+//  }
+    
+    
+	Register.create({
+            username: request.body.username,
+            password: request.body.password,
+            password2: request.body.password2,
+            email: request.body.email
+	}).then(function(){
+                response.render('index')
+        })
+})
+
 
 app.get('/login', function (request, response){
     response.render('login')
@@ -62,7 +99,23 @@ app.post("/login", function (request,response){
 })
 
 
+app.get('/logout', function (request, response) {
+	request.session.destroy(function(error) {
+		if(error) {
+			throw error;
+		}
+		response.redirect('/');
+	})
+});
 
+
+app.get('/homepage',function(request, response){
+        	var user = request.session.user;
+	if (user === undefined) {
+		response.redirect('/');
+	}
+    response.render('homepage')
+})
 
 
 

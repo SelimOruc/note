@@ -1,0 +1,27 @@
+html
+    a(href='/') go to index
+    <br>
+    a(href='/login') go to login
+    body
+    
+        form(name="register" method="post", action="/register")
+            <br><br>
+            span.label Username  
+            input(type="text" name="username")
+            <br><br>
+            span.label Password  
+            input(type="text" name="password")
+            <br><br>
+            span.label Password(check)  
+            input(type="text" name="passwordcheck")
+            <br><br>
+            span.label 2nd Password (for others) 
+            input(type="text" name="password2")
+            <br><br>
+            span.label 2nd Password (check) 
+            input(type="text" name="password2check")
+            <br><br>
+            span.label E-mail 
+            input(type="text"  name="email")
+            <br><br>
+            input(type="submit" value="register")
