@@ -1,6 +1,13 @@
 html
+    head
+        script(src='http://code.jquery.com/jquery-latest.min.js', type='text/javascript')
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
+        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
+        
     title homepage
     body
+    link(href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', rel='stylesheet')
+
 
     if admin
         a(href='/logout') log out
@@ -22,6 +29,15 @@ html
         <br>
         h1 The Notessss
         p ------------------------------
-            each bericht in note   
-                h1= bericht.title
-  
+          
+        each bericht in note   
+            #accordion.panel-group(role='tablist', aria-multiselectable='true')
+              .panel.panel-default
+                #headingOne.panel-heading(role='tab')
+                  h4.panel-title #{bericht.title}
+                    a(role='button', data-toggle='collapse', data-parent='#accordion', href='#collapseOne', aria-expanded='true', aria-controls='collapseOne')
+                #collapseOne.panel-collapse.collapse.in(role='tabpanel', aria-labelledby='headingOne') 
+                  .panel-body #{bericht.bericht} 
+
+
+                    

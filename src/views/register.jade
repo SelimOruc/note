@@ -1,29 +1,43 @@
 html
-    a(href='/') go to index
-    <br>
-    a(href='/login') go to login
+
     script(src='validator.js')
-    
+
     body
+        link(href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', rel='stylesheet')
+        link(href='vendor/bootstrap/css/login.css', rel='stylesheet')
+        link(href='vendor/bootstrap/css/bootstrap.css', rel='stylesheet')
+        .container
+          .row
+            .col-md-offset-5.col-md-3
+              .form-login
     
-        form(name="register" method="post", action="/register" onsubmit = "return validateFirstName()")
-            <br><br>
-            span.label Username  
-            input(type="text" name="username")
-            <br><br>
-            span.label Password  
-            input(type="text" name="password")
-            <br><br>
-            span.label Password(check)  
-            input(type="text" name="passwordcheck")
-            <br><br>
-            span.label 2nd Password (for others) 
-            input(type="text" name="password2")
-            <br><br>
-            span.label 2nd Password (check) 
-            input(type="text" name="password2check")
-            <br><br>
-            span.label E-mail 
-            input(type="text"  name="email")
-            <br><br>
-            input(type="submit" value="register")
+
+                    form(name="register" method="post", action="/register" onsubmit = "return validateFirstName()")
+                     h4 Welcome back.
+                     span(style='color: black') Vul hier uw gebruikersnaam in
+                     input(name='username' type='text' )
+                     br
+                     br
+                     span(style='color: black') Typ hier uw wachtwoord in
+                     input(name='password' type='password')
+                     br
+                     br
+                     span(style='color: black') Typ hier nogmaals uw wachtwoord in
+                     input(name='passwordcheck' type='password')
+                     br
+                     br
+                     span(style='color: black') Typ hier uw tweede wachtwoord in
+                     input(name='password2' type='password')
+                     br
+                     br
+                     span(style='color: black') Typ hier nogmaals uw tweede wachtwoord in
+                     input(name='password2check' type='password')
+                     br
+                     br
+                     span(style='color: black') vul hier uw email in
+                     input(name='email' type='email')
+                     br
+                     br
+                     input(value='register' type='submit') 
+                    form(action='/')
+                      input(type='submit', value='ga terug naar de log in')

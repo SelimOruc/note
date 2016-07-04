@@ -35,42 +35,23 @@ var Note = sequelize.define('note', {
 	bericht: Sequelize.TEXT,
 });
 
+Register.hasMany(Note);
+Note.belongsTo(Register);
+
 app.set ("views", "src/views");
 app.set ("view engine","jade");
 
 app.get('/',function (request,response){
     response.render('index')
 })
-
-app.get('/register',function (request,response){
-    response.render('register')
-})
-
-app.post("/register",function(request,response){    
-    
-	Register.create({
-            username: request.body.username,
-            password: request.body.password,
-            password2: request.body.password2,
-            email: request.body.email
-	}).then(function(){
-                response.render('index')
-        })
-})
-
-
-app.get('/login', function (request, response){
-    response.render('login')
-})
-
-app.post("/login", function (request,response){
+app.post("/", function (request,response){
     if(request.body.username.length === 0) {
-		response.redirect('login');
+		response.redirect('/');
 		return;
 	}
         
     if(request.body.password.length === 0) {
-		response.redirect('login');
+		response.redirect('/');
 		return;
 	}
         
@@ -91,7 +72,7 @@ app.post("/login", function (request,response){
                             response.redirect('/homepage');
                 }   
                 else {
-			response.redirect('/login');
+			response.redirect('/');
 		}
 	});
 })
@@ -107,14 +88,36 @@ app.get('/logout', function (request, response) {
 });
 
 
+app.get('/register',function (request,response){
+    response.render('register')
+})
+
+app.post("/register",function(request,response){    
+    
+	Register.create({
+            username: request.body.username,
+            password: request.body.password,
+            password2: request.body.password2,
+            email: request.body.email
+	}).then(function(){
+                response.render('index')
+        })
+})
+
+//
+//app.get('/login', function (request, response){
+//    response.render('login')
+//})
+
+
+
+
 app.get('/homepage',function(request, response){
         	var user = request.session.user;
 	if (user === undefined) {
 		response.redirect('/');
 	}
-//    response.render('homepage', {
-//        admin: request.session.admin
-//    })
+
     Note.findAll().then(function(theposts){
                 response.render('homepage',{ note : theposts, admin: request.session.admin});
             })
@@ -125,7 +128,12 @@ app.get('/homepage',function(request, response){
 app.get('/wall',function(request,response){
     
     
-                Note.findAll().then(function(theposts){
+                Note.findAll({
+                    where:{
+                        registerId : request.session.user.id
+                    }
+                    
+                }).then(function(theposts){
                 response.render('wall',{ note : theposts});
             })
     
@@ -138,6 +146,7 @@ app.post('/wall',function (request,response){
 	Note.create({
            title: request.body.title ,
            bericht: request.body.body,
+           registerId: request.session.user.id
 	}).then(function(){
                Note.findAll().then(function(theposts){
                 //response.send(theposts)
@@ -145,20 +154,6 @@ app.post('/wall',function (request,response){
             })
         })
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

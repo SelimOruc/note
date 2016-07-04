@@ -1,9 +1,22 @@
 html
-    title the note app
-    body
-    
-    a(href='/register') register
-    <br>
-    <br>
-    a(href='/login') log in
-    
+  body
+    // Pulling Awesome Font
+    link(href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', rel='stylesheet')
+    link(href='vendor/bootstrap/css/login.css', rel='stylesheet')
+    link(href='vendor/bootstrap/css/bootstrap.css', rel='stylesheet')
+    .container
+      .row
+        .col-md-offset-5.col-md-3
+          .form-login
+           
+           form(name='login' method='post' action='/')
+            h4 Welcome back.
+            input(name='username' type='text' placeholder='username')
+            br
+            br
+            input(name='password' type='password' placeholder='password')
+            br
+            br
+            input(value='log in' type='submit') 
+           form(action='/register')
+             input(type='submit', value='register')
