@@ -5,6 +5,7 @@ var bodyParser = require('body-parser')
 var app = express()
 var session = require('express-session')
 app.use(bodyParser.urlencoded ({extended: false}));
+app.use(express.static('./resource'));
 
 
 
@@ -29,6 +30,11 @@ var Register = sequelize.define('register', {
         email: Sequelize.TEXT
 });
 
+var Note = sequelize.define('note', {
+	title: Sequelize.TEXT,
+	bericht: Sequelize.TEXT,
+});
+
 app.set ("views", "src/views");
 app.set ("view engine","jade");
 
@@ -40,23 +46,7 @@ app.get('/register',function (request,response){
     response.render('register')
 })
 
-app.post("/register",function(request,response){
-//    if((typeof alert) === 'undefined') {
-//    global.alert = function(message) {
-//        console.log(message);
-//    }
-//}
-//    if (request.body.username == "")
-//        {
-//            alert("Error: Username cannot be blank!");
-//        }
-// if(request.body.password != "" && request.body.password == request.body.passwordcheck) {
-//      if(request.body.password.length < 6) {
-//        alert("Error: Password must contain at least six characters!");
-//
-//      }
-//  }
-    
+app.post("/register",function(request,response){    
     
 	Register.create({
             username: request.body.username,
@@ -91,8 +81,16 @@ app.post("/login", function (request,response){
 	}).then(function (user) {
 		if (user !== null && request.body.password === user.password) {
 			request.session.user = user;
+                        request.session.admin = true;
 			response.redirect('/homepage');
-		} else {
+		} 
+                else if (user !== null && request.body.password === user.password2)
+                {
+                            request.session.user = user;
+                            request.session.admin = false;
+                            response.redirect('/homepage');
+                }   
+                else {
 			response.redirect('/login');
 		}
 	});
@@ -114,8 +112,50 @@ app.get('/homepage',function(request, response){
 	if (user === undefined) {
 		response.redirect('/');
 	}
-    response.render('homepage')
+//    response.render('homepage', {
+//        admin: request.session.admin
+//    })
+    Note.findAll().then(function(theposts){
+                response.render('homepage',{ note : theposts, admin: request.session.admin});
+            })
 })
+
+
+
+app.get('/wall',function(request,response){
+    
+    
+                Note.findAll().then(function(theposts){
+                response.render('wall',{ note : theposts});
+            })
+    
+    
+})
+
+
+
+app.post('/wall',function (request,response){
+	Note.create({
+           title: request.body.title ,
+           bericht: request.body.body,
+	}).then(function(){
+               Note.findAll().then(function(theposts){
+                //response.send(theposts)
+                response.render('wall',{ note : theposts});
+            })
+        })
+})
+
+
+
+
+
+
+
+
+
+
+
 
 
 

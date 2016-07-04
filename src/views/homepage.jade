@@ -1,12 +1,27 @@
 html
-    title TODO supply a title
+    title homepage
     body
-    a(href='/logout') log out
-    <br>
-    <br>
-    a(href='/wall') go to notes
-    <br>
-    <br>
-    a(href='/setting') settings
-    <br>
-    <br>
+
+    if admin
+        a(href='/logout') log out
+        <br>
+        <br>
+        a(href='/wall') go to notes
+        <br>
+        <br>
+        a(href='/setting') settings
+        <br>
+        
+        
+
+
+
+    else
+        a(href='/logout') log out
+        <br>
+        <br>
+        h1 The Notessss
+        p ------------------------------
+            each bericht in note   
+                h1= bericht.title
+  

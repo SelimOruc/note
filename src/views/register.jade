@@ -2,9 +2,11 @@ html
     a(href='/') go to index
     <br>
     a(href='/login') go to login
+    script(src='validator.js')
+    
     body
     
-        form(name="register" method="post", action="/register")
+        form(name="register" method="post", action="/register" onsubmit = "return validateFirstName()")
             <br><br>
             span.label Username  
             input(type="text" name="username")

@@ -1,0 +1,21 @@
+html
+    title homepage
+    body
+    a(href='/logout') log out
+    <br>
+    <br>
+    a(href='/homepage') homepage
+    <br>
+    <br>
+    form(name='post' method='post' action='/wall')
+            input(name='title' type='text' placeholder='title')
+            <br>
+            <br>
+            textarea(rows="9" cols="22" name='body' type='text' placeholder='je bericht')
+            <br>
+            <br>
+            input(type='submit' value='post je bericht')
+    h1 The Notessss
+    p ------------------------------
+        each bericht in note   
+            h1= bericht.title
