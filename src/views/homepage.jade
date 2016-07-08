@@ -29,15 +29,22 @@ html
         <br>
         h1 The Notessss
         p ------------------------------
-          
-        each bericht in note   
-            #accordion.panel-group(role='tablist', aria-multiselectable='true')
-              .panel.panel-default
-                #headingOne.panel-heading(role='tab')
-                  h4.panel-title #{bericht.title}
-                    a(role='button', data-toggle='collapse', data-parent='#accordion', href='#collapseOne', aria-expanded='true', aria-controls='collapseOne')
-                #collapseOne.panel-collapse.collapse.in(role='tabpanel', aria-labelledby='headingOne') 
-                  .panel-body #{bericht.bericht} 
+        
+
+
+        #accordion.panel-group(role='tablist', aria-multiselectable='true') 
+        each bericht, index in note   
+
+          .panel.panel-default
+            .panel-heading(role='tab', id='heading'+index)
+              h4.panel-title 
+                a(role='button', data-toggle='collapse', data-parent='#accordion', href='#collapse'+index, aria-expanded='false', aria-controls='collapseOne')
+                  | #{bericht.title}
+            .panel-collapse.collapse.in(role='tabpanel', aria-labelledby='heading'+index, id='collapse'+index)
+              .panel-body
+                | #{bericht.bericht}
+
+                  
 
 
                     

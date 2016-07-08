@@ -1,6 +1,12 @@
 html
+    head
+        script(src='http://code.jquery.com/jquery-latest.min.js', type='text/javascript')
+        link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
+        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
+        
     title homepage
     body
+    link(href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css', rel='stylesheet')
     a(href='/logout') log out
     <br>
     <br>
@@ -11,11 +17,21 @@ html
             input(name='title' type='text' placeholder='title')
             <br>
             <br>
-            textarea(rows="9" cols="22" name='body' type='text' placeholder='je bericht')
+            textarea(rows="9" cols="22" name='body' type='text' placeholder='je note')
             <br>
             <br>
             input(type='submit' value='post je bericht')
     h1 The Notessss
     p ------------------------------
-        each bericht in note   
-            h1= bericht.title
+           
+                    #accordion.panel-group(role='tablist', aria-multiselectable='true') 
+        each bericht, index in note   
+
+          .panel.panel-default
+            .panel-heading(role='tab', id='heading'+index)
+              h4.panel-title 
+                a(role='button', data-toggle='collapse', data-parent='#accordion', href='#collapse'+index, aria-expanded='false', aria-controls='collapseOne',class='collapsed')
+                  | #{bericht.title}
+            .panel-collapse.collapse(role='tabpanel', aria-labelledby='heading'+index, id='collapse'+index)
+              .panel-body
+                | #{bericht.bericht}

@@ -118,7 +118,11 @@ app.get('/homepage',function(request, response){
 		response.redirect('/');
 	}
 
-    Note.findAll().then(function(theposts){
+        Note.findAll({
+            where:{
+                        registerId : request.session.user.id
+                    }
+        }).then(function(theposts){
                 response.render('homepage',{ note : theposts, admin: request.session.admin});
             })
 })
@@ -126,13 +130,12 @@ app.get('/homepage',function(request, response){
 
 
 app.get('/wall',function(request,response){
-    
-    
+     console.log('User id is ' + request.session.user.id)
                 Note.findAll({
                     where:{
                         registerId : request.session.user.id
                     }
-                    
+                   
                 }).then(function(theposts){
                 response.render('wall',{ note : theposts});
             })
