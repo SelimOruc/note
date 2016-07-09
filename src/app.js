@@ -130,7 +130,7 @@ app.get('/homepage',function(request, response){
 
 
 app.get('/wall',function(request,response){
-     console.log('User id is ' + request.session.user.id)
+    
                 Note.findAll({
                     where:{
                         registerId : request.session.user.id
@@ -151,7 +151,9 @@ app.post('/wall',function (request,response){
            bericht: request.body.body,
            registerId: request.session.user.id
 	}).then(function(){
-               Note.findAll().then(function(theposts){
+               Note.findAll({where:{
+                        registerId : request.session.user.id
+                    }}).then(function(theposts){
                 //response.send(theposts)
                 response.render('wall',{ note : theposts});
             })
