@@ -15,7 +15,7 @@ app.use(session({
 	saveUninitialized: false
 }));
 
-var sequelize = new Sequelize('noteapp', 'postgres', "Selim0ruc", {
+var sequelize = new Sequelize('noteapp', 'postgres', "wachtwoord", {
 	host: 'localhost',
 	dialect: 'postgres',
         define: {
